@@ -16,14 +16,17 @@ while principal > 0:
         #principal = principal - extra_payment
         total_paid = total_paid + payment + extra_payment
         months_total += 1
-        print((months_total-1), total_paid, principal)
+        #print((months_total-1), total_paid, principal)
+        print(f'Month={months_total-1}  Total Paid: {round(total_paid,2)}   Principal Remaining: {round(principal,2)}')
     principal = principal * (1+rate/12) - payment
     total_paid = total_paid + payment
     months_total += 1
     if principal < 0:
         principal -= principal
-    print((months_total-1), total_paid, principal)
+    #print((months_total-1), total_paid, principal)
+    #print(f'{months_total-1}, {total_paid}, {principal}')
+    print(f'Month={months_total-1}  Total Paid: {round(total_paid,2)}   Principal Remaining: {round(principal,2)}')
 
-print('Total paid', total_paid)
-print('Total Number of Months', months_total)
+#print('Total paid', total_paid)
+#print('Total Number of Months', months_total)
 
