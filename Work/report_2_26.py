@@ -1,41 +1,45 @@
 # report.py
 #
 # Exercise 2.26
+'''
+line 361
+prices = {
+   'GOOG': 513.25,
+   'CAT': 87.22,
+   'IBM': 93.37,
+   'MSFT': 44.12
+}
+>>> prices = { }
+>>> prices['IBM'] = 92.45
+>>> prices['MSFT'] = 45.12
+>>> prices
+... look at the result ...
+>>> prices['IBM']
+92.45
+>>> prices['AAPL']
+... look at the result ...
+>>> 'AAPL' in prices
+False
+>>>
+Once you have written your `read_prices()` function, test it
+interactively to make sure it works:
+
+>>> prices = read_prices('Data/prices.csv')
+>>> prices['IBM']
+106.28
+>>> prices['MSFT']
+20.89
+'''
 import csv
+#prices = {}  #{} = dict
 
 def read_prices(filename):
-    prices = {}
+    pricesfn = {}
     f = open(filename, 'r')
     rows = csv.reader(f)
     for row in rows:
-        prices[row0] = float([row1])
-    return prices
-
-def read_portfolio(filename):
-    with open(filename, 'rt') as f:
-        #portfolio = []
-        #holding = {} # Initial empty dict
-        reader = csv.reader(f)
-        #rows = csv.reader(f)
-        headers = next(reader)
-        for row in reader:
-            holding = {}
-            try:
-                #for row in reader:
-                    #holding = (row[0], int(row[1]), float(row[2]))
-                    #portfolio.append(holding)
-                #for line in f:
-                    #row = line.split(',')
-                    #holdings[row[0]] = float(row[1])
-                    #name, shares, price = row
-                    #print(row)
-                    holding['name'] = row[0]
-                    holding['shares'] = int(row[1])
-                    holding['price'] = float(row[2])
-                    #print(holding)
-                    portfolio.append(holding)
-                    #print(portfolio)
-            except:
-                print('Bad line found and skipped')
-                next(f)
-    return portfolio
+        try:
+            pricesfn[row[0]] = float(row[1])
+        except:
+            pass
+    return pricesfn
