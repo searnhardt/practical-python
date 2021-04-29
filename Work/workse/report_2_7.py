@@ -11,10 +11,11 @@ import csv
 import sys
 
 portfolio = []
+curvalue = 0.00
 #holding = {} # Initial empty dict
 
 def read_prices(filename2):
-    #exercise 2.6
+    #exercise 2.6 - Dictionary
     pricesfn = {}
     f = open(filename2, 'r')
     rows = csv.reader(f)
@@ -26,13 +27,14 @@ def read_prices(filename2):
     return pricesfn
 
 def read_portfolio(filename):
-    #Exercise 2.5
+    #Exercise 2.5 - List of Dictionaries
     with open(filename, 'rt') as f:
         #portfolio = []
         #holding = {} # Initial empty dict
         reader = csv.reader(f)
         #rows = csv.reader(f)
         headers = next(reader)
+        #print("Holdings")
         for row in reader:
             holding = {}
             try:
@@ -47,7 +49,7 @@ def read_portfolio(filename):
                     holding['name'] = row[0]
                     holding['shares'] = int(row[1])
                     holding['price'] = float(row[2])
-                    print(holding)
+                    #print(holding)
                     portfolio.append(holding)
                     #print(portfolio)
             except:
@@ -58,13 +60,13 @@ def read_portfolio(filename):
 if len(sys.argv) == 2:
     filename = sys.argv[1]
 else:
-    filename = 'Data/portfolio.csv'
-    filename2 = 'Data/prices.csv'
+    filename = 'Work/Data/portfolio.csv'
+    filename2 = 'Work/Data/prices.csv'
 
-cost = read_portfolio(filename)  #List
+share = read_portfolio(filename)  #List
 prices = read_prices(filename2)  #Dictionary
 #print('Total cost', cost)
-print("")
+#print("")
 #print('Prices', prices)
 '''
 {'name': 'AA', 'shares': 100, 'price': 32.2}
@@ -73,9 +75,30 @@ for dic in dataList:
     for key in dic:
         print(dic[key])
 '''
-for stock in cost:
-    for holding['name'] in stock:
-        print(stock[holding])
-        #for name in holding:
-            #print(name)
-            #print(stock[holding[1]])
+#Good Code for prices
+# for price in prices.items():
+#    print(price[1])
+
+for stock in share:
+    print("Stock Name: ",stock['name'],"   Shares: ",stock['shares'],"   Initial Price: ",format(stock['price'],'.2f'))
+    #print(stock['shares'])
+    #print(stock['price'])
+    inicost = stock['shares'] * stock['price']
+    print("Initial Purchase Cost: ",format(inicost,'.2f'))
+    for price in prices.items():
+        if stock['name'] == price[0]:
+            #print(price[0])
+            print("Current Price: ",format(price[1],'.2f'))
+            curcost = stock['shares'] * price[1]
+            if curcost > inicost:
+                print("gain of ",format(curcost - inicost,'.2f'))
+            else:
+                print("loss of ",format(inicost - curcost,'.2f'))
+            curvalue += curcost
+            print("")
+print("Current Portfolio Value is ",format(curvalue,'.2f'))
+    #    print(stock[st_name])
+
+#print(share) # list of dictionaries
+#print("")
+#print(prices)
