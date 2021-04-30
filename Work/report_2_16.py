@@ -1,4 +1,4 @@
-# report_2_12.py  03_Formatting.md Exercist 2.12
+# report_2_16.py  04_Sequences.md Exercist 2.16
 '''
 In this report, "Price" is the current share price of the stock and "Change" is the 
 change in the share price from the initial purchase price.
@@ -20,12 +20,15 @@ def read_portfolio(filename):
         headers = next(rows)
 
         for row in rows:
-            stock = {
-                 'name'   : row[0],
-                 'shares' : int(row[1]),
-                 'price'   : float(row[2])
-            }
-            portfolio.append(stock)
+            record = dict(zip(headers,row))
+            print(record)
+            # stock = {
+            #      'name'   : row[0],
+            #      'shares' : int(row[1]),
+            #      'price'   : float(row[2])
+            # }
+            # portfolio.append(stock)
+            portfolio.append(record)
 
     return portfolio
 
@@ -79,7 +82,7 @@ def make_report(portfolio, prices):
                 '''
     return portfolio_list
 
-portfolio = read_portfolio('Work/Data/portfolio.csv')
+portfolio = read_portfolio('Work/Data/portfoliodate.csv')
 prices    = read_prices('Work/Data/prices.csv')
 report    = make_report(portfolio, prices)
 #for r in report:
@@ -90,19 +93,19 @@ print(f'{headers[0]:>10s} {headers[1]:>10s} {headers[2]:>10s} {headers[3]:>10s}'
 print('-'*10,'-'*10,'-'*10,'-'*10)        
 for name, shares, price, change in report:
     price = "$"+str(f'{price:.2f}')
-    print(f'{name:>10s} {shares:>10d} {price:>10s} {change:>10.2f}')
+    print(f'{name:>10s} {int(shares):>10d} {price:>10s} {change:>10.2f}')
 
 # Calculate the total cost of the portfolio
 total_cost = 0.0
 for s in portfolio:
-    total_cost += s['shares']*s['price']
+    total_cost += int(s['shares'])*float(s['price'])
 
 print('Total cost', total_cost)
 
 # Compute the current value of the portfolio
 total_value = 0.0
 for s in portfolio:
-    total_value += s['shares']*prices[s['name']]
+    total_value += int(s['shares'])*prices[s['name']]
 
 print('Current value', total_value)
 print('Gain', total_value - total_cost)
