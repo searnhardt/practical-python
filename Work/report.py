@@ -1,45 +1,55 @@
 # report.py
-#
-# Exercise 2.4
 import csv
-import sys
-
-portfolio = []
-#holding = {} # Initial empty dict
 
 def read_portfolio(filename):
-    with open(filename, 'rt') as f:
-        #portfolio = []
-        #holding = {} # Initial empty dict
-        reader = csv.reader(f)
-        #rows = csv.reader(f)
-        headers = next(reader)
-        for row in reader:
-            holding = {}
-            try:
-                #for row in reader:
-                    #holding = (row[0], int(row[1]), float(row[2]))
-                    #portfolio.append(holding)
-                #for line in f:
-                    #row = line.split(',')
-                    #holdings[row[0]] = float(row[1])
-                    #name, shares, price = row
-                    #print(row)
-                    holding['name'] = row[0]
-                    holding['shares'] = int(row[1])
-                    holding['price'] = float(row[2])
-                    #print(holding)
-                    portfolio.append(holding)
-                    #print(portfolio)
-            except:
-                print('Bad line found and skipped')
-                next(f)
+    '''
+    Read a stock portfolio file into a list of dictionaries with keys
+    name, shares, and price.
+    '''
+    portfolio = []
+    with open(filename) as f:
+        rows = csv.reader(f)
+        headers = next(rows)
+
+        for row in rows:
+            stock = {
+                 'name'   : row[0],
+                 'shares' : int(row[1]),
+                 'price'   : float(row[2])
+            }
+            portfolio.append(stock)
+
     return portfolio
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = 'Work/Data/portfolio.csv'
+def read_prices(filename):
+    '''
+    Read a CSV file of price data into a dict mapping names to prices.
+    '''
+    prices = {}
+    with open(filename) as f:
+        rows = csv.reader(f)
+        for row in rows:
+            try:
+                prices[row[0]] = float(row[1])
+            except IndexError:
+                pass
 
-cost = read_portfolio(filename)
-print('Total cost', cost)
+    return prices
+
+portfolio = read_portfolio('Work/Data/portfolio.csv')
+prices    = read_prices('Work/Data/prices.csv')
+
+# Calculate the total cost of the portfolio
+total_cost = 0.0
+for s in portfolio:
+    total_cost += s['shares']*s['price']
+
+print('Total cost', total_cost)
+
+# Compute the current value of the portfolio
+total_value = 0.0
+for s in portfolio:
+    total_value += s['shares']*prices[s['name']]
+
+print('Current value', total_value)
+print('Gain', total_value - total_cost)

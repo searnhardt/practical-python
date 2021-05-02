@@ -1,15 +1,11 @@
 # report.py
 #
-# Exercise 2.26
+# Exercise 2.4
 import csv
+import sys
 
-def read_prices(filename):
-    prices = {}
-    f = open(filename, 'r')
-    rows = csv.reader(f)
-    for row in rows:
-        prices[row0] = float([row1])
-    return prices
+portfolio = []
+#holding = {} # Initial empty dict
 
 def read_portfolio(filename):
     with open(filename, 'rt') as f:
@@ -39,3 +35,11 @@ def read_portfolio(filename):
                 print('Bad line found and skipped')
                 next(f)
     return portfolio
+
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = 'Work/Data/portfolio.csv'
+
+cost = read_portfolio(filename)
+print('Total cost', cost)
